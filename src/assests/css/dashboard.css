@@ -1,0 +1,65 @@
+.dashboard {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.content {
+    padding: 20px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li.selected a{
+    color: #53BA00;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #fff;
+    background-color: #53BA00;
+}
+
+.content {
+    flex: 1;
+    /* padding: 20px; */
+    background-color: #f4f4f4;
+}
+
+.chart-container {
+    margin: 20px;
+}
+
+.chart-container {
+    height: 100vh;
+}
