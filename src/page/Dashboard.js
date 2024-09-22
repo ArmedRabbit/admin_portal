@@ -20,7 +20,6 @@ export default function Index() {
   ChartJS.register(
     BarElement,
     CategoryScale,
-    LinearScale,
     Title,
     Tooltip,
     Legend

@@ -28,7 +28,9 @@ function SignInForm() {
               description: user.message,
               duration: 1
             });
-            window.location.href = '/';
+            localStorage.setItem("email", state.email);
+            localStorage.setItem("password", state.password);
+            window.location.href = '/home';
           } else {
             notification.error({
               description: user.message,
