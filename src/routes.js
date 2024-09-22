@@ -18,7 +18,7 @@ export default function Router() {
             element: <Home />,
             children: [
                 {
-                    path: '/dashboard',
+                    path: '/home',
                     element: <Dashboard />
                 },
                 {

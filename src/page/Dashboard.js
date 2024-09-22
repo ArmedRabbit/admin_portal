@@ -6,7 +6,6 @@ import {
   BarElement,
   ArcElement,
   CategoryScale,
-  LinearScale,
   Title,
   Tooltip,
   Legend,
@@ -92,22 +91,6 @@ export default function Index() {
     },
   };
 
-  const getStrokeColor = (percent) => {
-    // Define color based on percentage
-    if (percent <= 20) return '#f5222d'; // Red
-    if (percent <= 40) return '#fa8c16'; // Orange
-    if (percent <= 60) return '#fadb14'; // Yellow
-    if (percent <= 80) return '#52c41a'; // Green
-    return '#1890ff'; // Blue
-  };
-
-  const stepColors = [
-    '#ff4d4f', '#fa8c16', '#fadb14', '#52c41a', '#1890ff',
-    '#13c2c2', '#722ed1', '#eb2f96', '#fa541c', '#faad14',
-    '#a0d911', '#52c41a', '#2f54eb', '#722ed1', '#eb2f96',
-    '#fa541c', '#faad14', '#a0d911', '#52c41a', '#2f54eb',
-    '#722ed1', '#eb2f96', '#fa541c', '#faad14', '#a0d911'
-  ];
 
   return (
     <div className="chart-container">
@@ -121,15 +104,6 @@ export default function Index() {
               gapPosition={"bottom"}
               percent={75}
               strokeWidth={5}
-              // strokeColor={(percent) => {
-              // Define color based on percentage
-              //   if (percent <= 20) return '#f5222d'; // Red
-              //   if (percent <= 40) return '#fa8c16'; // Orange
-              //   if (percent <= 60) return '#fadb14'; // Yellow
-              //   if (percent <= 80) return '#52c41a'; // Green
-              //   return '#1890ff'; // Blue
-              // }}
-              strokeColor={stepColors} // Customize based on your logic
             />
           </Col>
           <Col span={10} >

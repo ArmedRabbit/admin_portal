@@ -1,14 +1,14 @@
 import React from "react";
-import { login } from '../context/AuthContext';
-
-// export const AuthContext = createContext();
-// import "../assests/css/auth.css";
+import { login } from '../firebase';
+import { notification } from "antd";
 
 function SignInForm() {
   const [state, setState] = React.useState({
     email: "",
     password: ""
   });
+  const [isLoading, setLoading] = React.useState(false);
+
   const handleChange = evt => {
     const value = evt.target.value;
     setState({
@@ -18,13 +18,27 @@ function SignInForm() {
   };
 
   const handleOnSubmit = async (evt) => {
-    evt.preventDefault();
-
-    const { email, password } = state;
-    alert(`You are login with email: ${email} and password: ${password}`);
-
-    const res = await login(email, password);
-    console.log(res);
+    setLoading(true);
+    evt.preventDefault()
+    try {
+      login(state.email, state.password)
+        .then((user) => {
+          if (user.code == 200) {
+            notification.success({
+              description: user.message,
+              duration: 1
+            });
+            window.location.href = '/';
+          } else {
+            notification.error({
+              description: user.message,
+              duration: 1
+            });
+          }
+        });
+    } catch (err) {
+      console.error('Error finding user:', err);
+    }
 
     for (const key in state) {
       setState({
@@ -32,10 +46,11 @@ function SignInForm() {
         [key]: ""
       });
     }
+    setLoading(false);
   };
 
   return (
-    <div className="form-container sign-in-container">
+    <div className={`form-container sign-in-container ${isLoading ? "loading" : ""}`}>
       <form onSubmit={handleOnSubmit}>
         <h1>Sign in</h1>
         <input
@@ -53,7 +68,7 @@ function SignInForm() {
           onChange={handleChange}
         />
         <a href="#">Forgot your password?</a>
-        <button>Sign In</button>
+        <button disabled={isLoading}>Sign In</button>
       </form>
     </div>
   );
