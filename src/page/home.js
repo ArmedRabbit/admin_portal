@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
+import { notification } from "antd";
 
 import SideBar from "../component/sidebar";
 import { login } from "../firebase";
 import "../assests/css/dashboard.css";
 
 export default function Home() {
-
     if (localStorage.getItem("email") == null) {
         window.location.href = "/login";
     } else {
@@ -18,7 +18,6 @@ export default function Home() {
                     });
                     localStorage.setItem("email", localStorage.getItem("email"));
                     localStorage.setItem("password", localStorage.getItem("password"));
-                    window.location.href = '/home';
                 } else {
                     notification.error({
                         description: user.message,

@@ -52,7 +52,7 @@ function SignInForm() {
   };
 
   return (
-    <div className={`form-container sign-in-container ${isLoading ? "loading" : ""}`}>
+    <div className={`form-container sign-in-container`}>
       <form onSubmit={handleOnSubmit}>
         <h1>Sign in</h1>
         <input

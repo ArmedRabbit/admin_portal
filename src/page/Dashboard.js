@@ -6,11 +6,11 @@ import {
   BarElement,
   ArcElement,
   CategoryScale,
+  LinearScale, // Import LinearScale
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-
 
 import "../assests/css/dashboard.css";
 
@@ -20,15 +20,11 @@ export default function Index() {
   ChartJS.register(
     BarElement,
     CategoryScale,
+    LinearScale, // Register LinearScale
     Title,
     Tooltip,
-    Legend
-  );
-
-  ChartJS.register(
-    ArcElement,
-    Tooltip,
-    Legend
+    Legend,
+    ArcElement
   );
 
   const BarData = {
@@ -89,7 +85,6 @@ export default function Index() {
       },
     },
   };
-
 
   return (
     <div className="chart-container">
