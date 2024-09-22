@@ -1,30 +1,55 @@
-import { initializeApp } from 'firebase/app';
+// Import the Firebase SDK for Cloud Firestore
 import {
-    getFirestore
+    collection,
+    onSnapshot,
+    query,
+    where,
+    addDoc,
 } from 'firebase/firestore';
-import { getAuth } from "firebase/auth";
-import {
-    API_KEY,
-    APP_ID,
-    AUTH_DOMAIN,
-    MEASUREMENT_ID,
-    MESSAGING_SENDER_ID,
-    PROJECT_ID,
-    STORAGE_BUCKET
-} from './constants';
 
-const firebaseConfig = {
-    apiKey: API_KEY,
-    authDomain: AUTH_DOMAIN,
-    projectId: PROJECT_ID,
-    storageBucket: STORAGE_BUCKET,
-    messagingSenderId: MESSAGING_SENDER_ID,
-    appId: APP_ID,
-    measurementId: MEASUREMENT_ID,
-};
+import { db } from "./firebase-config";
 
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-const auth = getAuth(firebaseApp);
+export const signup = async (email, password) => {
 
-export { db, auth };
+}
+
+export const login = async (email, password) => {
+    try {
+        const userRef = collection(db, 'user');
+        const loginUser = new Promise((resolve) => {
+            onSnapshot(
+                query(userRef, where('email', '==', email)),
+                async (querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        await addDoc(userRef, { email, password, created_at: new Date().toDateString(), updated_at: new Date().toDateString() })
+                            .then(() => {
+                                console.log('Success login');
+                                resolve({ code: 200, message: 'Success login' });
+                            })
+                            .catch(() => {
+                                console.log('Register is failed');
+                                resolve({ code: 400, message: 'Register is failed' });
+                            });
+                    } else {
+                        onSnapshot(
+                            query(userRef,
+                                where('email', '==', email),
+                                where('password', '==', password)
+                            ),
+                            (querySnapshot1) => {
+                                if (querySnapshot1.empty) {
+                                    console.log('Password is not matched');
+                                    resolve({ code: 400, message: 'Password is not matched' });
+                                } else {
+                                    console.log('Success login');
+                                    resolve({ code: 200, message: 'Success login' });
+                                }
+                            });    
+                    }
+                });
+        });
+        return loginUser;
+    } catch (err) {
+        return err;
+    }
+}
