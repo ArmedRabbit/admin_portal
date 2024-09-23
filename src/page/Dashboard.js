@@ -90,7 +90,7 @@ export default function Index() {
     <div className="chart-container">
       <div className="chart-left">
         <Row align='middle' justify='space-around' >
-          <Col span={10} align='center'>
+          <Col md={10} sm={22} align='center'>
             <h3>Actual Cost</h3>
             <Progress
               type="dashboard"
@@ -100,7 +100,7 @@ export default function Index() {
               strokeWidth={5}
             />
           </Col>
-          <Col span={10} >
+          <Col md={10} sm={22} >
             <h2>Project Phase % Completed</h2>
             <Pie data={PieData} options={PieOptions} />
           </Col>
@@ -109,10 +109,10 @@ export default function Index() {
 
       <div className="chart-left">
         <Row align='middle' justify='space-around' >
-          <Col span={10} >
+          <Col md={10} sm={22} offset={1} >
             <Bar data={BarData} options={BarOptions} />
           </Col>
-          <Col span={10} >
+          <Col md={10} sm={22} >
             <h2>Project Phase % Completed</h2>
             <Pie data={PieData} options={PieOptions} />
           </Col>

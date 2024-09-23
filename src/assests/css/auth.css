@@ -132,3 +132,27 @@ input {
     width: 100%;
     z-index: 2;
 }
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90vw;
+    }
+    
+    .overlay-left {
+        display: none;
+    }
+    
+
+    .overlay-right {
+        left: 0%;
+        width: 100%;
+    }
+}

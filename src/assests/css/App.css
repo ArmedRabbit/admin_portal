@@ -20,3 +20,11 @@ body {
     margin: 0;
     /* background: url("https://www.iflex-solutions.com/public/images/media/16968493264.png") */
 }
+
+.spin {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 50%;
+    z-index: 10;
+}
