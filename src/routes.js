@@ -1,9 +1,14 @@
+import React from 'react'; // Add this line
 import { useRoutes } from 'react-router-dom';
 //auth
 import SignIn from './page/Auth/SignIn';
 //admin
 import Home from './page/home';
 import Dashboard from './page/Dashboard';
+import Ignition from './page/Ignition';
+import ACVoltage from './page/ACVoltage';
+import Fuel from './page/Fuel';
+import Remotely from './page/Remotely';
 
 export default function Router() {
     return useRoutes([
@@ -18,24 +23,24 @@ export default function Router() {
             element: <Home />,
             children: [
                 {
-                    path: '/home',
+                    path: '/',
                     element: <Dashboard />
                 },
                 {
                     path: '/ignition',
-                    element: <Dashboard />
+                    element: <Ignition />
                 },
                 {
                     path: '/voltage',
-                    element: <Dashboard />
+                    element: <ACVoltage />
                 },
                 {
                     path: '/fuel',
-                    element: <Dashboard />
+                    element: <Fuel />
                 },
                 {
                     path: '/remotely',
-                    element: <Dashboard />
+                    element: <Remotely />
                 }
             ]
         },

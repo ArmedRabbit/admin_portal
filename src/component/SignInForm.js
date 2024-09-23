@@ -1,13 +1,14 @@
-import React from "react";
-import { login } from '../firebase';
+import React, { useState } from "react";
 import { notification } from "antd";
+import { login, forgot } from '../firebase';
 
-function SignInForm() {
-  const [state, setState] = React.useState({
+function SignInForm(props) {
+  const { setLoading } = props
+  const [state, setState] = useState({
     email: "",
     password: ""
   });
-  const [isLoading, setLoading] = React.useState(false);
+  const [isForgot, setForgot] = useState(false);
 
   const handleChange = evt => {
     const value = evt.target.value;
@@ -18,28 +19,51 @@ function SignInForm() {
   };
 
   const handleOnSubmit = async (evt) => {
+    evt.preventDefault();
     setLoading(true);
-    evt.preventDefault()
     try {
-      login(state.email, state.password)
-        .then((user) => {
-          if (user.code == 200) {
+      if (isForgot) {
+        forgot(state.email)
+          .then((user) => {
             notification.success({
               description: user.message,
               duration: 1
             });
-            localStorage.setItem("email", state.email);
-            localStorage.setItem("password", state.password);
-            window.location.href = '/home';
-          } else {
-            notification.error({
-              description: user.message,
+            setForgot(false);
+            setLoading(false);
+
+          })
+          .catch((err) => {
+            notification.success({
+              description: err.message,
               duration: 1
             });
-          }
-        });
+            setLoading(false);
+
+          })
+      } else {
+        login(state.email, state.password)
+          .then((user) => {
+            if (user.code == 200) {
+              window.location.href = '/';
+              notification.success({
+                description: user.message,
+                duration: 1
+              });
+              localStorage.setItem("email", state.email);
+              localStorage.setItem("password", state.password);
+            } else {
+              notification.error({
+                description: user.message,
+                duration: 1
+              });
+            }
+            setLoading(false);
+          });
+      }
     } catch (err) {
       console.error('Error finding user:', err);
+      setLoading(false);
     }
 
     for (const key in state) {
@@ -48,30 +72,37 @@ function SignInForm() {
         [key]: ""
       });
     }
-    setLoading(false);
   };
 
+  const toggleForgot = () => {
+    setForgot(!isForgot);
+  }
+
   return (
-    <div className={`form-container sign-in-container ${isLoading ? "loading" : ""}`}>
-      <form onSubmit={handleOnSubmit}>
-        <h1>Sign in</h1>
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={state.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={state.password}
-          onChange={handleChange}
-        />
-        <a href="#">Forgot your password?</a>
-        <button disabled={isLoading}>Sign In</button>
-      </form>
+    <div>
+      <div className={`form-container sign-in-container`}>
+        <form onSubmit={handleOnSubmit}>
+          <h1>Sign in</h1>
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+          />
+          <input
+            className={`${isForgot ? "hide" : "show"}`}
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={state.password}
+            onChange={handleChange}
+          />
+          <a href="#" onClick={toggleForgot}>{!isForgot ? "Forgot your password?" : "Go Back"}</a>
+          <button className={`sigin ${isForgot ? "hide" : "show"}`} onClick={handleOnSubmit}>Sign In</button>
+          <button className={`forgot ${!isForgot ? "hide" : "show"}`} onClick={handleOnSubmit}>Send</button>
+        </form>
+      </div>
     </div>
   );
 }
